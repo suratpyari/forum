@@ -1,0 +1,27 @@
+<% include_stylesheet "/tog_forum/stylesheets/forum" %>
+ 
+<div id="forum_show">
+<h2>Forum</h2>
+  <div class="forum_name">
+    <%= @forum.name %>
+  </div>
+  <div class="forum_description">
+    <%= @forum.description %>
+  </div>
+  <br />
+  <br />
+  <% for topic in @forum.forum_topics %>
+    <div>
+      <%= link_to topic.title, forum_topic_path(topic) %>
+    </div>
+    <div>
+      created by <%= link_to topic.user.profile.full_name, profile_path(topic.user.profile) %>
+    </div>
+    <div>
+      <%= topic.forum_posts.count %> posts
+    </div>
+    <hr />
+  <% end %>
+</div>
+ 
+ 

@@ -1,0 +1,16 @@
+<% include_stylesheet "/tog_forum/stylesheets/forum" %>
+<div id="new_forum_div">
+<h2><%= params[:action] == :edit ? "Edit Forum" : "New Forum" %></h2>
+<% form_for [:admin, @forum] do |f| %>
+  <%= f.label :name %>
+  <br>
+  <%= f.text_field :name %>
+  <br />
+  <%= f.label :description %>
+  <br>
+  <%= f.text_area :description, :rows => 5 %>
+  <br />
+  <%= f.submit "submit" %>
+<% end %>
+</div>
+ 

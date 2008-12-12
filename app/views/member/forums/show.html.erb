@@ -1,0 +1,44 @@
+<% include_stylesheet "/tog_forum/stylesheets/forum" %>
+ 
+<div id="forum_show">
+<h2>Forum</h2>
+  <div class="forum_name">
+    <%= @forum.name %>
+  </div>
+  <div class="forum_description">
+    <%= @forum.description %>
+  </div>
+  <br />
+  <br />
+   <h2>Topics</h2>
+  <% for topic in @forum.forum_topics %>
+    <div>
+      <%= link_to topic.title, member_forum_topic_path(topic) %>
+    </div>
+    <div>
+      created by <%= link_to topic.user.profile.full_name, profile_path(topic.user.profile) %>
+    </div>
+    <div>
+      <%= topic.forum_posts.count %> posts
+    </div>
+    <% if topic.user == current_user %>
+      <div>
+        <%= link_to "delete", member_forum_topic_path(topic), :method => :delete, :confirm => "Are You Sure" %>
+      </div>
+    <% end %>
+    <hr />
+  <% end %>
+</div>
+<% content_for :sidebar do %>
+  <div id="new_forum_topic_div">
+  <h2>Create New Topic </h2>
+  <% form_for [:member, @forum, @forum_topic] do |f| %>
+    <%= f.label :title %>
+    <br>
+    <%= f.text_field :title %>
+    <br />
+    <%= f.submit "submit" %>
+  <% end %>
+</div>
+<% end %>
+ 

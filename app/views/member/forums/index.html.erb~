@@ -1,0 +1,20 @@
+<% include_stylesheet "/tog_forum/stylesheets/forum" %>
+ 
+<div id="forum_index">
+<% for forum in @forums %>
+  <div class="forum_name">
+    <%= link_to forum.name, member_forum_path(forum) %>
+  </div>
+  <div class="post-topic">
+    <%= forum.post_count %>
+    posts in
+    <%= forum.forum_topics.count %>
+    topics.
+  </div>
+  <div class="forum_description">
+    <%= forum.description %>
+  </div>
+  <hr />
+<% end %>
+ 
+</div>
