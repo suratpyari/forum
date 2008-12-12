@@ -3,6 +3,7 @@ class CreateForumTopics < ActiveRecord::Migration
     create_table :forum_topics do |t|
       t.string :title
       t.references :forum, :user
+      t.timestamps
     end
   end
  
