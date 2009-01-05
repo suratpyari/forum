@@ -7,7 +7,7 @@
       flash[:error] = "Sorry, the page cannot be found."
       redirect_to forums_path
     end
-    render :template => '/member/forum_topics/show' if current_user
+    render :template => '/member/forum_topics/show'
   end
   
  private ###########################

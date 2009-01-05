@@ -3,12 +3,12 @@ class ForumsController < ApplicationController
   before_filter :find_forum, :only => [:show]
   def index
     @forums = Forum.find(:all)
-    render :template => '/member/forums/index' if current_user
+    render :template => '/member/forums/index'
   end
   
   def show
     @forum_topic = ForumTopic.new
-    render :template => '/member/forums/show' if current_user
+    render :template => '/member/forums/show'
   end
   
  private ###########################
