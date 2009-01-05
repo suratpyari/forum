@@ -1,15 +1,20 @@
 class Member::ForumTopicsController < ApplicationController
   
-  before_filter :find_forum_topic, :only => [:show, :destroy]
-  
+  before_filter :find_forum_topic, :only => [:show, :destroy, :edit, :update]
+  before_filter :forum_topic_user?, :only => [:destroy, :edit, :update]
   def create
     @forum_topic = ForumTopic.new(params[:forum_topic].merge({:user_id => current_user.id, :forum_id => params[:forum_id]}))
-    if @forum_topic.save
-      flash[:ok] = "Topic has sbeen created."
-      redirect_to member_forum_path(@forum_topic.forum)
-    else
-      render :template => '/member/forums/show'
-    end
+    render :update do |page|
+      if @forum_topic.save
+        page.replace_html :flashmsg, "Topic has been created."
+        page.insert_html :bottom, :forum_topics,:partial => '/member/forum_topics/forum_topic', :object => @forum_topic
+        page.replace_html :errors, ""
+        page['forum_topic_form'].reset
+      else
+        page.replace_html :flashmsg, ""
+        page.replace_html :errors, @forum_topic.errors.full_messages.join("<br />")
+      end
+    end      
   end
   
   def show
@@ -17,21 +22,51 @@ class Member::ForumTopicsController < ApplicationController
   end
   
   def destroy
-    if @forum_topic.destroy
-      flash[:ok] = "Topic has been deleted."
-    end
-    redirect_to member_forum_path(@forum_topic.forum)
+    render :update do |page|
+      if @forum_topic.destroy
+        page.replace_html :flashmsg, "Topic has been deleted."
+        page.replace_html "forum_topic_#{@forum_topic.id}", ""
+      end
+    end     
   end
   
- private ###########################
- 
- def find_forum_topic
-  @forum_topic = ForumTopic.find(params[:id]) rescue nil
-  unless @forum_topic
-    flash[:error] = "Sorry, the page cannot be found."
-    redirect_to member_forums_path
+  def edit
+    render :update do |page|
+      page.replace_html "forum_topic_#{@forum_topic.id}", ""
+      page.replace_html "forum_topic_form_div", :partial => "/member/forum_topics/forum_topic_form"
+    end
   end
- end
+  
+  def update
+    render :update do |page|
+      if @forum_topic.update_attributes(params[:forum_topic])
+        page.replace_html :flashmsg, "Topic has been updated."
+        page.replace_html "forum_topic_#{@forum_topic.id}", :partial => '/member/forum_topics/forum_topic', :object => @forum_topic
+        page.replace_html :errors, ""
+        @forum_topic = ForumTopic.new
+        page.replace_html "forum_topic_form_div", :partial => "/member/forum_topics/forum_topic_form" 
+      else
+        page.replace_html :flashmsg, ""
+        page.replace_html :errors, @forum_topic.errors.full_messages.join("<br />")
+      end
+    end     
+  end
+  private ###########################
+
+  def forum_topic_user?
+    unless @forum_topic.user==current_user
+      flash[:error] = "Sorry, we cannot process your request."
+      redirect_to member_forums_path
+    end
+  end
+
+  def find_forum_topic
+    @forum_topic = ForumTopic.find(params[:id]) rescue nil
+    unless @forum_topic
+      flash[:error] = "Sorry, the page cannot be found."
+      redirect_to member_forums_path
+    end
+  end
  
 end
  

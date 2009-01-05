@@ -1,0 +1,9 @@
+
+  <h2><%= @forum_topic.new_record? ? "Create New Topic" : "Edit Topic" %> </h2>
+  <div id="errors"></div>
+  <% remote_form_for [:member, @forum, @forum_topic], :html => {:id => "forum_topic_form"} do |f| %>
+    <p><%= f.text_field :title, :rows => 5, :cols => 25 %></p>
+    <br />
+    <%= f.submit "submit" %>
+  <% end %>
+

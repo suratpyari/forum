@@ -1,38 +1,23 @@
-<% include_stylesheet "/tog_forum/stylesheets/forum" %>
- 
+<% include_stylesheet "/stylesheets/forum" %>
+
 <div id="forum_topic_show">
 <h2>Topic</h2>
   <div class="forum_topic_name">
-    <%= @forum_topic.title %>
+    <h3><%= @forum_topic.title %></h3>
   </div>
   <br />
   <br />
   <h2>Posts</h2>
-  <% for post in @forum_topic.forum_posts %>
-    <div>
-      <%= h post.body %>
-    </div>
-    <div>
-      created by <%= link_to post.user.profile.full_name, profile_path(post.user.profile) %>
-    </div>
-    <% if post.user == current_user %>
-      <div>
-        <%= link_to "delete", member_forum_post_path(post), :method => :delete, :confirm => "Are You Sure" %>
-      </div>
-    <% end %>
-    <hr />
+  <div id="forum_posts"
+  <% for forum_post in @forum_topic.forum_posts %>
+    <%= render :partial => "member/forum_posts/forum_post", :object => forum_post %>
   <% end %>
+  </div>
 </div>
-<% content_for :sidebar do %>
-  <div id="new_forum_post_div">
-  <h2>Create New Post </h2>
-  <% form_for [:member, @forum_topic, @forum_post] do |f| %>
-    <%= f.label :Post %>
-    <br>
-    <%= f.text_field :body %>
-    <br />
-    <%= f.submit "submit" %>
+<% if current_user %>
+  <% content_for :sidebar do %>
+    <div id="forum_post_form_div">
+      <%= render :partial => "member/forum_posts/forum_post_form" %>
+    </div>
   <% end %>
-</div>
 <% end %>
- 

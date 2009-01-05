@@ -1,0 +1,18 @@
+<% div_for forum_post do %>
+<div>
+  <%= h forum_post.body %>
+</div>
+<div>
+  created by <%= link_to forum_post.user.profile.full_name, profile_path(forum_post.user.profile) %>
+</div>
+
+  <% if forum_post.user == current_user %>
+    <div>
+      <% if forum_post.user == current_user %>
+        <%= link_to_remote "edit", :url =>  edit_member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :get %>
+        <%= link_to_remote "delete", :url => member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :delete, :confirm => "Are You Sure" %>
+      <% end %>
+    </div>
+  <% end %>
+<hr />
+<% end %>
