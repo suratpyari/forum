@@ -1,4 +1,4 @@
-class Member::ForumPostsController < ApplicationController
+class ForumPostsController < ApplicationController
   
   before_filter :find_forum_post, :only => :show
   
