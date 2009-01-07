@@ -1,7 +1,9 @@
 class ForumPostsController < ApplicationController
   
   before_filter :find_forum_post, :only => :show
-  
+  def show
+  	render :template => "/member/forum_posts/show"
+  end
   private #########################
   
   def find_forum_post
