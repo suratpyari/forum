@@ -8,7 +8,7 @@ class ForumPostsController < ApplicationController
     @forum_post = ForumPost.find(params[:id]) rescue nil
     unless @forum_post
       flash[:error] = "Sorry, the page cannot be found."
-      redirect_to member_forums_path
+      redirect_to forums_path
     end
   end
  
