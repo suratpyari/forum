@@ -1,5 +1,6 @@
 require_plugin 'tog_core'
 require_plugin 'tog_user'
+require_plugin 'will_paginate'
  
 Dir[File.dirname(__FILE__) + '/locale/**/*.yml'].each do |file|
   I18n.load_path << file

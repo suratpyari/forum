@@ -2,7 +2,7 @@ class Member::ForumsController < ApplicationController
  
   before_filter :find_forum, :only => [:show]
   def index
-    @forums = Forum.find(:all)
+    @forums = Forum.paginate :page => params[:page] ? params[:page] : 1, :order => 'updated_at DESC'
   end
   
   def show

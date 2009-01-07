@@ -4,5 +4,7 @@ class ForumTopic < ActiveRecord::Base
   belongs_to :forum
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :forum_id
+  cattr_reader :per_page
+  @@per_page = 10
 end
  

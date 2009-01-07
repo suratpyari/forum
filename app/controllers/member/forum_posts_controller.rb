@@ -8,7 +8,7 @@ class Member::ForumPostsController < ApplicationController
     render :update do |page|
       if @forum_post.save
         page.replace_html :flashmsg, "Post has been created."
-        page.insert_html :bottom, :forum_posts,:partial => '/member/forum_posts/forum_post', :object => @forum_post
+        page.insert_html :top, :forum_posts,:partial => '/member/forum_posts/forum_post', :object => @forum_post
         page.replace_html :errors, ""
         page['forum_post_form'].reset
       else

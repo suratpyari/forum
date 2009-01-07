@@ -2,7 +2,7 @@ class Admin::ForumsController < ApplicationController
  
   before_filter :find_forum, :except => [:index, :new, :create]
   def index
-    @forums = Forum.find(:all)
+    @forums = Forum.paginate :page => params[:page] ? params[:page] : 1, :order => 'updated_at DESC'
   end
   
   def new

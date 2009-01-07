@@ -7,7 +7,7 @@ class Member::ForumTopicsController < ApplicationController
     render :update do |page|
       if @forum_topic.save
         page.replace_html :flashmsg, "Topic has been created."
-        page.insert_html :bottom, :forum_topics,:partial => '/member/forum_topics/forum_topic', :object => @forum_topic
+        page.insert_html :top, :forum_topics,:partial => '/member/forum_topics/forum_topic', :object => @forum_topic
         page.replace_html :errors, ""
         page['forum_topic_form'].reset
       else
