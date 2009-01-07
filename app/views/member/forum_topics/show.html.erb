@@ -1,19 +1,24 @@
 <% include_stylesheet "/stylesheets/forum" %>
 
-<div id="forum_topic_show">
-<h2>Topic</h2>
-  <div class="forum_topic_name">
-    <h3><%= @forum_topic.title %></h3>
+<div id="forum_show">
+  <h2>Topic</h2>
+  <div class="forum_name">
+    <strong><%= @forum_topic.title %></strong>
   </div>
-  <br />
-  <br />
-  <h2>Posts</h2>
-  <div id="forum_posts"
-  <% for forum_post in @forum_topic.forum_posts %>
-    <%= render :partial => "member/forum_posts/forum_post", :object => forum_post %>
-  <% end %>
-  </div>
+</div>  
+<div class="floatLeft leftColumn">
+  <div id="forum_posts" class="forumTopics">
+    <h2>Posts</h2>
+    <% @forum_posts = @forum_topic.forum_posts.paginate(:page => params[:page] ? params[:page] : 1, :order => 'updated_at DESC') %>
+    <% for forum_post in @forum_posts %>
+      <div class="forumTopicIndex">
+        <%= render :partial => "member/forum_posts/forum_post", :object => forum_post %>
+      </div>
+    <% end %>
+    <%= will_paginate @forum_posts %>
+  </div>  
 </div>
+
 <% if current_user %>
   <% content_for :sidebar do %>
     <div id="forum_post_form_div">

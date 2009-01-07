@@ -2,20 +2,21 @@
 
 <div id="forum_index">
 <h2>Forums</h2>
-<% for forum in @forums %>
-  <div class="forum_name">
-    <%= link_to forum.name, member_forum_path(forum) %>
-  </div>
-  <div class="post-topic">
-    <%= forum.post_count %>
-    posts in
-    <%= forum.forum_topics.count %>
-    topics.
-  </div>
-  <div class="forum_description">
-    <%= forum.description %>
-  </div>
-  <hr />
-<% end %>
-
+  <% for forum in @forums %>
+    <div class="postBlock">
+      <div class="forum_name">
+        <%= link_to forum.name, current_user ? member_forum_path(forum) : forum_path(forum) %>
+      </div>
+      <div class="post-topic">
+        <%= forum.post_count %>
+        posts in
+        <%= forum.forum_topics.count %>
+        topics.
+      </div>
+      <div class="forum_description">
+        <%= truncate(forum.description, 100) %>
+      </div>
+    </div>  
+  <% end %>
+  <%= will_paginate @forums %>
 </div>

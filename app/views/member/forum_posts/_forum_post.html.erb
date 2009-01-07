@@ -1,18 +1,20 @@
 <% div_for forum_post do %>
-<div>
-  <%= h forum_post.body %>
+<div class="post">
+  <%= link_to truncate(forum_post.body, 100), current_user ? member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post) : forum_topic_forum_post_path(forum_post.forum_topic, forum_post) %>
 </div>
-<div>
-  created by <%= link_to forum_post.user.profile.full_name, profile_path(forum_post.user.profile) %>
-</div>
-
+<div class="clear">
   <% if forum_post.user == current_user %>
-    <div>
+    <div class="optionsBlock floatLeft vspace">
       <% if forum_post.user == current_user %>
-        <%= link_to_remote "edit", :url =>  edit_member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :get %>
-        <%= link_to_remote "delete", :url => member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :delete, :confirm => "Are You Sure" %>
+        <p class="redBlock floatLeft"><%= link_to_remote "edit", :url =>  edit_member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :get %></p>
+        <p class="blueBlock space floatLeft"><%= link_to_remote "delete", :url => member_forum_topic_forum_post_path(forum_post.forum_topic, forum_post), :method => :delete, :confirm => "Are You Sure" %></p>
       <% end %>
     </div>
   <% end %>
+  
+  <div class="floatRight writer">
+    <span class="lightGrey">created by</span> <%= link_to forum_post.user.profile.full_name, profile_path(forum_post.user.profile) %>
+  </div>
+</div>  
 <hr />
 <% end %>

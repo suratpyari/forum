@@ -1,0 +1,20 @@
+<div id=forum_show>
+  <h2>Post</h2>
+	<div class="post">
+		<%= h @forum_post.body %>
+	</div>
+	<div class="clear">
+		<% if @forum_post.user == current_user %>
+		  <div class="optionsBlock floatLeft vspace">
+		    <% if @forum_post.user == current_user %>
+		      <p class="redBlock floatLeft"><%= link_to_remote "edit", :url =>  edit_member_forum_topic_forum_post_path(@forum_post.forum_topic, @forum_post), :method => :get %></p>
+		      <p class="blueBlock space floatLeft"><%= link_to_remote "delete", :url => member_forum_topic_forum_post_path(@forum_post.forum_topic, @forum_post), :method => :delete, :confirm => "Are You Sure" %></p>
+		    <% end %>
+		  </div>
+		<% end %>
+		
+		<div class="floatRight writer">
+		  <span class="lightGrey">created by</span> <%= link_to @forum_post.user.profile.full_name, profile_path(@forum_post.user.profile) %>
+		</div>
+	</div>  
+</div>
