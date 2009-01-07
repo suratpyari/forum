@@ -3,7 +3,7 @@ class Forum < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   cattr_reader :per_page
-  @@per_page = 10
+  @@per_page = 5
   def post_count
     count = 0
     forum_topics.each{|topic| count = count+topic.forum_posts.count}
