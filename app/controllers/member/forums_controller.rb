@@ -1,4 +1,4 @@
-class Member::ForumsController < ApplicationController
+class Member::ForumsController < Member::BaseController
  
   before_filter :find_forum, :only => [:show]
   def index

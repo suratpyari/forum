@@ -1,4 +1,4 @@
-class Member::ForumTopicsController < ApplicationController
+class Member::ForumTopicsController < Member::BaseController
   
   before_filter :find_forum_topic, :only => [:show, :destroy, :edit, :update]
   before_filter :forum_topic_user?, :only => [:destroy, :edit, :update]

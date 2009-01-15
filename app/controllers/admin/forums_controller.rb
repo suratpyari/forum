@@ -1,4 +1,4 @@
-class Admin::ForumsController < ApplicationController
+class Admin::ForumsController < Admin::BaseController
  
   before_filter :find_forum, :except => [:index, :new, :create]
   def index
